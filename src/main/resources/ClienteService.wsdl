@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<wsdl:definitions 
+	name="ClienteService"
+	xmlns:tns="http://www.sensedia.com/carteira/ClienteService"
+	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+	xmlns:ns0="http://www.sensedia.com/carteira/Cliente"
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+	targetNamespace="http://www.sensedia.com/carteira/ClienteService">
+	
+	<wsdl:types>
+
+		<xs:schema xmlns:ns0="http://www.sensedia.com/carteira/Cliente"
+			xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.sensedia.com/carteira/Cliente"
+			elementFormDefault="qualified" attributeFormDefault="unqualified">
+
+			<xs:simpleType name="CPFType">
+				<xs:restriction base="xs:string">
+					<xs:pattern value="[0-9]" />
+					<xs:maxLength value="11" />
+					<xs:minLength value="11" />
+				</xs:restriction>
+			</xs:simpleType>
+			
+			<xs:complexType name="ClienteRequestType">
+				<xs:sequence>
+					<xs:element name="id" type="xs:long" minOccurs="0" maxOccurs="1" />
+					<xs:element name="nome" type="xs:string" minOccurs="1" maxOccurs="1" />
+                    <xs:element name="cpf" type="ns0:CPFType" minOccurs="1" maxOccurs="1" />
+                    <xs:element name="senha" type="xs:string" minOccurs="1" maxOccurs="1" />
+				</xs:sequence>
+			</xs:complexType>
+			
+			<xs:complexType name="ClienteResponseType">
+				<xs:sequence>
+					<xs:element name="id" type="xs:long" minOccurs="0" maxOccurs="1" />
+					<xs:element name="nome" type="xs:string" minOccurs="1" maxOccurs="1" />
+                    <xs:element name="cpf" type="ns0:CPFType" minOccurs="1" maxOccurs="1" />
+					<xs:element name="enderecos" type="ns0:EnderecosType" minOccurs="1" maxOccurs="1" />
+					<xs:element name="telefones" type="ns0:TelefonesType" minOccurs="1" maxOccurs="1" />
+				</xs:sequence>
+			</xs:complexType>
+			
+			<xs:complexType name="ContatoType">
+				<xs:sequence>
+					<xs:element name="id" type="xs:long" minOccurs="0" maxOccurs="1" />
+					<xs:element name="nome" type="xs:string" minOccurs="1" maxOccurs="1" />
+					<xs:element name="cpf" type="ns0:CPFType" minOccurs="1" maxOccurs="1" />
+				</xs:sequence>
+			</xs:complexType>
+			
+			<xs:complexType name="ContatoRequestType">
+				<xs:sequence>
+					<xs:element name="idCliente" type="xs:long" minOccurs="1" maxOccurs="1" />
+					<xs:element name="contato" type="ns0:ContatoType" minOccurs="1" maxOccurs="1" />
+				</xs:sequence>
+			</xs:complexType>
+			
+			<xs:complexType name="ContatosType">
+				<xs:sequence>
+					<xs:element name="contato" minOccurs="0" maxOccurs="unbounded" />
+				</xs:sequence>
+			</xs:complexType>
+			
+			<xs:complexType name="EnderecoType">
+				<xs:sequence>
+					<xs:element name="id" type="xs:long" minOccurs="0" maxOccurs="1" />
+					<xs:element name="logradouro" type="xs:string" minOccurs="1" maxOccurs="1" />
+					<xs:element name="numero" type="xs:string" minOccurs="1" maxOccurs="1" />
+					<xs:element name="bairro" type="xs:string" minOccurs="1" maxOccurs="1" />
+					<xs:element name="cidade" type="xs:string" minOccurs="1" maxOccurs="1" />
+					<xs:element name="estado" type="xs:string" minOccurs="1" maxOccurs="1" />
+					<xs:element name="cep" minOccurs="1" maxOccurs="1">
+						<xs:simpleType>
+							<xs:restriction base="xs:string">
+								<xs:pattern value="[0-9]"></xs:pattern>
+								<xs:maxLength value="8"></xs:maxLength>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+			
+			<xs:complexType name="EnderecoRequestType">
+				<xs:sequence>
+					<xs:element name="idCliente" type="xs:long" minOccurs="1" maxOccurs="1" />
+					<xs:element name="endereco" type="ns0:EnderecoType" minOccurs="1" maxOccurs="1" />
+				</xs:sequence>
+			</xs:complexType>
+			
+			<xs:complexType name="EnderecosType">
+				<xs:sequence>
+					<xs:element name="endereco" minOccurs="0" maxOccurs="unbounded" />
+				</xs:sequence>
+			</xs:complexType>
+			
+			<xs:complexType name="TelefoneType">
+				<xs:sequence>
+					<xs:element name="id" type="xs:long" minOccurs="0" maxOccurs="1" />
+					<xs:element name="tipo" type="xs:string" minOccurs="1" maxOccurs="1" />
+					<xs:element name="numero" type="xs:string" minOccurs="1" maxOccurs="1" />
+				</xs:sequence>
+			</xs:complexType>
+			
+			<xs:complexType name="TelefoneRequestType">
+				<xs:sequence>
+					<xs:element name="idCliente" type="xs:long" minOccurs="1" maxOccurs="1" />
+					<xs:element name="telefone" type="ns0:TelefoneType" minOccurs="1" maxOccurs="1" />
+				</xs:sequence>
+			</xs:complexType>			
+			
+			<xs:complexType name="TelefonesType">
+				<xs:sequence>
+					<xs:element name="telefone" minOccurs="0" maxOccurs="unbounded" />
+				</xs:sequence>
+			</xs:complexType>
+			
+			<xs:complexType name="ConsularClientePorCPFRequestType">
+				<xs:sequence>
+					<xs:element name="cpf" type="ns0:CPFType" minOccurs="1" maxOccurs="1" />
+				</xs:sequence>
+			</xs:complexType>
+
+			<xs:complexType name="ListarContatosRequestType">
+				<xs:sequence>
+					<xs:element name="cpf" type="ns0:CPFType" minOccurs="1" maxOccurs="1" />
+				</xs:sequence>
+			</xs:complexType>
+			
+			<xs:complexType name="ValidarClienteRequestType">
+				<xs:sequence>
+					<xs:element name="cpf" type="ns0:CPFType" minOccurs="1" maxOccurs="1" />
+					<xs:element name="senha" type="xs:string" minOccurs="1" maxOccurs="1" />
+				</xs:sequence>
+			</xs:complexType>
+			
+			<xs:element name="SalvarClienteRequest" type="ns0:ClienteRequestType" />
+			<xs:element name="SalvarClienteResponse" type="ns0:ClienteResponseType" />
+			
+			<xs:element name="ConsularClientePorCPFRequest" type="ns0:ConsularClientePorCPFRequestType" />
+			<xs:element name="ConsularClientePorCPFResponse" type="ns0:ClienteResponseType" />
+			
+			<xs:element name="ValidarClienteRequest" type="ns0:ValidarClienteRequestType" />
+			<xs:element name="ValidarClienteResponse" type="ns0:ClienteResponseType" />
+			
+			<xs:element name="SalvarContatoRequest" type="ns0:ContatoRequestType" />
+			<xs:element name="SalvarContatoResponse" type="ns0:ContatoType" />
+			
+			<xs:element name="ListarContatosRequest" type="ns0:ListarContatosRequestType" />
+			<xs:element name="ListarContatosResponse" type="ns0:ContatosType" />
+			
+			<xs:element name="SalvarTelefoneRequest" type="ns0:TelefoneRequestType" />
+			<xs:element name="SalvarTelefoneResponse" type="ns0:TelefoneType" />
+
+			<xs:element name="SalvarEnderecoRequest" type="ns0:EnderecoRequestType" />
+			<xs:element name="SalvarEnderecoResponse" type="ns0:EnderecoType" />
+
+		</xs:schema>
+	</wsdl:types>
+	
+	<wsdl:message name="salvarClienteRequest">
+		<wsdl:part name="in" element="ns0:SalvarClienteRequest" />
+	</wsdl:message>
+	<wsdl:message name="salvarClienteResponse">
+		<wsdl:part name="out" element="ns0:SalvarClienteResponse" />
+	</wsdl:message>
+
+	<wsdl:message name="consularClientePorCPFRequest">
+		<wsdl:part name="in" element="ns0:ConsularClientePorCPFRequest" />
+	</wsdl:message>
+	<wsdl:message name="consularClientePorCPFResponse">
+		<wsdl:part name="out" element="ns0:ConsularClientePorCPFResponse" />
+	</wsdl:message>
+
+	<wsdl:message name="validarClienteRequest">
+		<wsdl:part name="in" element="ns0:ValidarClienteRequest" />
+	</wsdl:message>
+	<wsdl:message name="validarClienteResponse">
+		<wsdl:part name="out" element="ns0:ValidarClienteResponse" />
+	</wsdl:message>
+	
+	<wsdl:message name="salvarContatoRequest">
+		<wsdl:part name="in" element="ns0:SalvarContatoRequest" />
+	</wsdl:message>
+	<wsdl:message name="salvarContatoResponse">
+		<wsdl:part name="out" element="ns0:SalvarContatoResponse" />
+	</wsdl:message>	
+
+	<wsdl:message name="listarContatosRequest">
+		<wsdl:part name="in" element="ns0:ListarContatosRequest" />
+	</wsdl:message>
+	<wsdl:message name="listarContatosResponse">
+		<wsdl:part name="out" element="ns0:ListarContatosResponse" />
+	</wsdl:message>
+	
+	<wsdl:message name="salvarTelefoneRequest">
+		<wsdl:part name="in" element="ns0:SalvarTelefoneRequest" />
+	</wsdl:message>
+	<wsdl:message name="salvarTelefoneResponse">
+		<wsdl:part name="out" element="ns0:SalvarTelefoneResponse" />
+	</wsdl:message>	
+	
+	<wsdl:message name="salvarEnderecoRequest">
+		<wsdl:part name="in" element="ns0:SalvarEnderecoRequest" />
+	</wsdl:message>
+	<wsdl:message name="salvarEnderecoResponse">
+		<wsdl:part name="out" element="ns0:SalvarEnderecoResponse" />
+	</wsdl:message>		
+	
+	<wsdl:portType name="ClientePortType">
+		<wsdl:operation name="SalvarCliente">
+			<wsdl:input message="tns:salvarClienteRequest" />
+			<wsdl:output message="tns:salvarClienteResponse" />
+		</wsdl:operation>
+		<wsdl:operation name="ConsultarClientePorCPF">
+			<wsdl:input message="tns:consularClientePorCPFRequest" />
+			<wsdl:output message="tns:consularClientePorCPFResponse" />
+		</wsdl:operation>
+		<wsdl:operation name="ValidarCliente">
+			<wsdl:input message="tns:validarClienteRequest" />
+			<wsdl:output message="tns:validarClienteResponse" />
+		</wsdl:operation>
+		<wsdl:operation name="SalvarContato">
+			<wsdl:input message="tns:salvarContatoRequest" />
+			<wsdl:output message="tns:salvarContatoResponse" />
+		</wsdl:operation>
+		<wsdl:operation name="ListarContatos">
+			<wsdl:input message="tns:listarContatosRequest" />
+			<wsdl:output message="tns:listarContatosResponse" />
+		</wsdl:operation>
+		<wsdl:operation name="SalvarTelefone">
+			<wsdl:input message="tns:salvarTelefoneRequest" />
+			<wsdl:output message="tns:salvarTelefoneResponse" />
+		</wsdl:operation>
+		<wsdl:operation name="SalvarEndereco">
+			<wsdl:input message="tns:salvarEnderecoRequest" />
+			<wsdl:output message="tns:salvarEnderecoResponse" />
+		</wsdl:operation>
+	</wsdl:portType>
+	
+	<wsdl:binding name="ClienteSOAPBinding" type="tns:ClientePortType">
+		<soap:binding style="document"
+			transport="http://schemas.xmlsoap.org/soap/http" />
+			
+		<wsdl:operation name="SalvarCliente">
+			<soap:operation style="document" soapAction="/services/carteira/Cliente/salvarCliente" />
+			<wsdl:input>
+				<soap:body use="literal" parts="in" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" parts="out" />
+			</wsdl:output>
+		</wsdl:operation>
+
+		<wsdl:operation name="ConsultarClientePorCPF">
+			<soap:operation style="document" soapAction="/services/carteira/Cliente/consultarClientePorCPF" />
+			<wsdl:input>
+				<soap:body use="literal" parts="in" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" parts="out" />
+			</wsdl:output>
+		</wsdl:operation>
+
+		<wsdl:operation name="ValidarCliente">
+			<soap:operation style="document" soapAction="/services/carteira/Cliente/validarCliente" />
+			<wsdl:input>
+				<soap:body use="literal" parts="in" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" parts="out" />
+			</wsdl:output>
+		</wsdl:operation>
+		
+		<wsdl:operation name="SalvarContato">
+			<soap:operation style="document" soapAction="/services/carteira/Cliente/salvarContato" />
+			<wsdl:input>
+				<soap:body use="literal" parts="in" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" parts="out" />
+			</wsdl:output>
+		</wsdl:operation>
+
+		<wsdl:operation name="ListarContatos">
+			<soap:operation style="document" soapAction="/services/carteira/Cliente/listarContatos" />
+			<wsdl:input>
+				<soap:body use="literal" parts="in" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" parts="out" />
+			</wsdl:output>
+		</wsdl:operation>
+		
+		<wsdl:operation name="SalvarTelefone">
+			<soap:operation style="document" soapAction="/services/carteira/Cliente/salvarTelefone" />
+			<wsdl:input>
+				<soap:body use="literal" parts="in" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" parts="out" />
+			</wsdl:output>
+		</wsdl:operation>
+		
+		<wsdl:operation name="SalvarEndereco">
+			<soap:operation style="document" soapAction="/services/carteira/Cliente/salvarEndereco" />
+			<wsdl:input>
+				<soap:body use="literal" parts="in" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" parts="out" />
+			</wsdl:output>
+		</wsdl:operation>
+		
+	</wsdl:binding>
+
+	<wsdl:service name="ClienteService">
+		<wsdl:port name="ClientePort" binding="tns:ClienteSOAPBinding">
+			<soap:address location="http://localhost/carteira/Cliente" />
+		</wsdl:port>
+	</wsdl:service>
+
+</wsdl:definitions>
