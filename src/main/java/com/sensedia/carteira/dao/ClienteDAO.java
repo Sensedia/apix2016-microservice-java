@@ -49,7 +49,7 @@ public class ClienteDAO {
     
     private PessoaBean buscarPessoaPorCPF(String cpf) {
         
-        String hql = "SELECT PessoaBean p "
+        String hql = "SELECT p FROM PessoaBean p "
                    + " WHERE p.cpf = :cpf";
         
         Query query = em.createQuery(hql, PessoaBean.class);
