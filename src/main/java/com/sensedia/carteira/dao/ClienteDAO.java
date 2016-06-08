@@ -47,22 +47,6 @@ public class ClienteDAO {
 
     }
     
-    private PessoaBean buscarPessoaPorCPF(String cpf) {
-        
-        String hql = "SELECT p FROM PessoaBean p "
-                   + " WHERE p.cpf = :cpf";
-        
-        Query query = em.createQuery(hql, PessoaBean.class);
-        query.setParameter("cpf", cpf);
-        
-        try {
-            return (PessoaBean) query.getSingleResult();
-        } catch (NoResultException e) {
-            return null;
-        }
-
-    }    
-    
     public ClienteBean buscarPorCPFeSenha(String cpf, String senha) {
         
         String hql = "SELECT c FROM ClienteBean c"
@@ -111,16 +95,7 @@ public class ClienteDAO {
     public ClienteBean salvar(ClienteBean cliente) {
         
         if (cliente.getPessoa().getId() == null) {
-            
-            PessoaBean pessoa = buscarPessoaPorCPF(cliente.getPessoa().getCpf());
-            
-            if (pessoa == null) {
-                em.persist(cliente.getPessoa());
-            } else {
-                cliente.getPessoa().setId(pessoa.getId());
-                em.merge(cliente.getPessoa());
-            }
-            
+            em.persist(cliente.getPessoa());
         } else {
             em.merge(cliente.getPessoa());
         }
@@ -144,16 +119,7 @@ public class ClienteDAO {
     public ContatoBean salvarContato(ContatoBean contato) {
         
         if (contato.getPessoa().getId() == null) {
-            
-            PessoaBean pessoa = buscarPessoaPorCPF(contato.getPessoa().getCpf());
-            
-            if (pessoa == null) {
-                em.persist(contato.getPessoa());
-            } else {
-                contato.getPessoa().setId(pessoa.getId());
-                em.merge(contato.getPessoa());
-            }
-                
+            em.persist(contato.getPessoa());
         } else {
             em.merge(contato.getPessoa());
         }
