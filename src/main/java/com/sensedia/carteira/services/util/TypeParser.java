@@ -66,8 +66,8 @@ public class TypeParser {
             type.setNome(bean.getPessoa().getNome());
             type.setCpf(bean.getPessoa().getCpf());
 
-            type.setEnderecos(toEnderecosType(bean.getEnderecos()));
-            type.setTelefones(toTelefonesType(bean.getTelefones()));
+            type.setEnderecos(toEnderecosType(bean.getPessoa().getEnderecos()));
+            type.setTelefones(toTelefonesType(bean.getPessoa().getTelefones()));
         }
         
         return type;

@@ -32,8 +32,8 @@ public class ClienteDAO {
         
         String hql = "SELECT c FROM ClienteBean c"
                    + "  JOIN FETCH c.pessoa p"
-                   + "  LEFT JOIN FETCH c.enderecos e"
-                   + "  LEFT JOIN FETCH c.telefones t"
+                   + "  LEFT JOIN FETCH p.enderecos e"
+                   + "  LEFT JOIN FETCH p.telefones t"
                    + " WHERE p.cpf = :cpf";
         
         Query query = em.createQuery(hql, ClienteBean.class);
@@ -51,8 +51,8 @@ public class ClienteDAO {
         
         String hql = "SELECT c FROM ClienteBean c"
                    + "  JOIN FETCH c.pessoa p"
-                   + "  LEFT JOIN FETCH c.enderecos e"
-                   + "  LEFT JOIN FETCH c.telefones t"
+                   + "  LEFT JOIN FETCH p.enderecos e"
+                   + "  LEFT JOIN FETCH p.telefones t"
                    + " WHERE p.cpf = :cpf"
                    + "   AND c.senha = :senha";
         

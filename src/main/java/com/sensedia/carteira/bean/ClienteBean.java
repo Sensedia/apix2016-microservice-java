@@ -37,12 +37,6 @@ public class ClienteBean {
     @OneToMany(mappedBy="pessoa", fetch=FetchType.LAZY)
     private Set<ContatoBean> contatos;
     
-    @OneToMany(mappedBy="pessoa", fetch=FetchType.LAZY)
-    private Set<TelefoneBean> telefones;
-    
-    @OneToMany(mappedBy="pessoa", fetch=FetchType.LAZY)
-    private Set<EnderecoBean> enderecos;
-    
     private String senha;
 
     public Long getId() {
@@ -67,22 +61,6 @@ public class ClienteBean {
 
     public void setContatos(Set<ContatoBean> contatos) {
         this.contatos = contatos;
-    }
-
-    public Set<TelefoneBean> getTelefones() {
-        return telefones;
-    }
-
-    public void setTelefones(Set<TelefoneBean> telefones) {
-        this.telefones = telefones;
-    }
-
-    public Set<EnderecoBean> getEnderecos() {
-        return enderecos;
-    }
-
-    public void setEnderecos(Set<EnderecoBean> enderecos) {
-        this.enderecos = enderecos;
     }
 
     public String getSenha() {

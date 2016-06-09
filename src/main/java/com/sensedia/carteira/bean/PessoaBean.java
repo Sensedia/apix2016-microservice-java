@@ -5,10 +5,13 @@
  */
 package com.sensedia.carteira.bean;
 
+import java.util.Set;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -25,6 +28,12 @@ public class PessoaBean {
     private Long id;
     private String cpf;
     private String nome;
+    
+    @OneToMany(mappedBy="pessoa", fetch=FetchType.LAZY)
+    private Set<TelefoneBean> telefones;
+    
+    @OneToMany(mappedBy="pessoa", fetch=FetchType.LAZY)
+    private Set<EnderecoBean> enderecos;    
 
     public Long getId() {
         return id;
@@ -49,5 +58,21 @@ public class PessoaBean {
     public void setNome(String nome) {
         this.nome = nome;
     }
+    
+    public Set<TelefoneBean> getTelefones() {
+        return telefones;
+    }
+
+    public void setTelefones(Set<TelefoneBean> telefones) {
+        this.telefones = telefones;
+    }
+
+    public Set<EnderecoBean> getEnderecos() {
+        return enderecos;
+    }
+
+    public void setEnderecos(Set<EnderecoBean> enderecos) {
+        this.enderecos = enderecos;
+    }    
     
 }
